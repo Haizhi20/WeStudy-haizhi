@@ -9,7 +9,7 @@
             </div>
         </div>
         <main class="container">
-            <VideoSection :key="componentKey" :section="this.sections[direcIndex]"/>
+            <VideoSection :key="componentKey" :section="this.sections[direcIndex]" :type="direcIndex"/>
         </main>
         <Footer/>
        
@@ -42,19 +42,15 @@ export default {
             sections:[
                 ['前端基础','前端进阶','数据库入门','走进大前端','大前端框架','移动端开发','深入底层','技能提升','走进企业'],
                 ['JavaSE','前端入门','MySQL','JavaWeb','SSM框架','微服务开发','深入底层','技能提升','走进企业'],
+                ['JavaSE','前端入门','MySQL','JavaWeb','SSM框架','微服务开发','深入底层','技能提升','走进企业'],
+                ['JavaSE','前端入门','MySQL','JavaWeb','SSM框架','微服务开发','深入底层','技能提升','走进企业'],
+                ['JavaSE','前端入门','MySQL','JavaWeb','SSM框架','微服务开发','深入底层','技能提升','走进企业'],
+                ['JavaSE','前端入门','MySQL','JavaWeb','SSM框架','微服务开发','深入底层','技能提升','走进企业'],
             ]
         }
     },
     methods: {
-        // //请求视频列表信息
-        // require:async function(){
-        //     const result=await this.$http({
-        //         url:'/video/queryVideo',
-        //         method:'get',
-        //     })
-        //     console.log('video拿到的结果',result)
-        //     this.list=result.data
-        // },
+        
         //根据用户选择的方向提供视频信息
         direction:function(index){
             this.direcIndex=index

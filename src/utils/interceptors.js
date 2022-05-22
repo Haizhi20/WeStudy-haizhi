@@ -11,11 +11,11 @@ const instance = axios.create({
 instance.interceptors.response.use( //通用拦截
     res => {
         console.log(res)
-        let { data, message, status } = res.data
+        let { data, msg, status } = res.data
         if (status == 200) {
-            return { data, message }
+            return { data, msg, }
         } else if (status == 100) {
-            return message
+            return msg
         } else {
             return res
         }

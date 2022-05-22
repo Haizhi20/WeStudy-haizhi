@@ -6,8 +6,16 @@
               <router-link to="/login">立即登录</router-link>
           </div>
           <div class="container">
-              <span :class="{warn:!eMailOK}">邮箱</span>
-              <input type="text" placeholder="请输入邮箱" v-model="eMail">
+              <span >方向</span>
+              <!-- <input type="text" placeholder="请输入邮箱" v-model="eMail"> -->
+              <select v-model="select">
+                  <option value="0">前端</option>
+                  <option value="1">后端</option>
+                  <option value="2">人工智能</option>
+                  <option value="3">嵌入式</option>
+                  <option value="4">大数据</option>
+                  <option value="5">产品</option>
+              </select>
           </div>
           <div class="container">
               <span :class="{warn:!usnOK}">用户名</span>
@@ -33,11 +41,10 @@ name:'Register',
 data(){
     return{
         isOK:false,
-        eMail:'',
+        select:0,
         username:'',
         password:'',
         checkPsw:'',
-        eMailOK:true,
         usnOK:true,
         pswOK:true,
         cpswOK:true
@@ -52,7 +59,8 @@ methods:{
                 url: '/user/register',
                 params:{
                     userName:this.username,
-                    userPwd:this.password
+                    userPwd:this.password,
+                    userStudyType:this.select
                 }
             })
             if(result.status==200){
@@ -124,7 +132,8 @@ methods:{
     font-size: 1em;
     color: #555555;
 }
-.container input{
+.container input,
+.container select{
     height: 40px;
     width: 200px;
     color: #333333;

@@ -16,24 +16,35 @@
               <div class="menuItem">
                   <router-link to="/" @mouseover="navHide()">资源</router-link>
               </div>
-              <div class="menuItem login" >
+              <div class="menuItem login" v-if="!logined">
                   <router-link to="/login" @mouseover="navHide()">登录</router-link>
               </div>
-              <div class="menuItem avatarImg" @click="toProfile()">
-                  <img src="../assets/preview.jpg" alt="">
+              <div class="menuItem login" v-if="logined">
+                  <router-link to="/profile" @mouseover="navHide()">{{uName}}</router-link>
               </div>
+              <div class="menuItem avatarImg" @click="showBox()" v-if="logined">
+                  <img src="../assets/haizhi.jpg" alt="">
+                  <span class="el-icon-caret-bottom"></span>
+              </div>
+              <transition name="fade">
+                <PopBox v-if="logined&&boxShow"/>
+              </transition>
           </div>
-          
       </div>
   </div>
 </transition>
 </template>
 
 <script>
+import PopBox from './PopBox.vue'
 export default {
+  components: { PopBox },
     name:'TopNav',
     data(){
         return {
+            logined:false,
+            boxShow:false,
+            uName:'',
             avatarImg:'',
             scroll:0,
             show:true,
@@ -61,6 +72,16 @@ export default {
       }
       this.scroll=scroll
     },
+    //判断是否已经登陆
+    isLogin:function(){
+        let storage=window.localStorage
+        if(storage.getItem('udata')){
+            this.logined=true
+            this.uName=JSON.parse(storage.getItem('udata')).userName
+        }else{
+            this.logined=false
+        }
+    },
     //路由跳转个人主页
     toProfile(){
         this.$router.push({path:'/profile'})
@@ -68,9 +89,14 @@ export default {
     //路由跳转视频页
     toVideo:function(){
        this.$router.push({path:`/video/${0}`}) // 后续需要修改，识别用户学习方向渲染视频页
+    },
+    //展示弹出框
+    showBox:function(){
+        this.boxShow=!this.boxShow
     }
     },
     mounted(){
+
         //绑定鼠标滚轮事件
         window.onscroll=()=>{
           this.navHide()
@@ -78,6 +104,7 @@ export default {
         //订阅消息，如果路由跳转到别的模块页面了，持续显示头部导航栏
         this.$bus.$on('pageChange',()=>{
             this.navHide()
+            this.isLogin()
         })
     },
     beforeDestroy() {
@@ -136,11 +163,11 @@ export default {
     font-family:  Helvetica;
 }
 .menu{
+    position: relative;
     display: flex;
     justify-content: space-around;
     width: 500px;
     height: 60px;
-
 }
 .menuItem{
     margin-right: 20px;
@@ -166,11 +193,12 @@ export default {
     left: -16px;
 }
 .avatarImg{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
+
 .avatarImg img{
     width: 40px;
     height: 40px;

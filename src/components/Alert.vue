@@ -56,14 +56,14 @@ export default {
 
 <style scoped>
 #alert{
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1em;
   font-weight: 500;
   top: 100px;
-  right: -150px;
+  left: calc(50% - 150px);
   width: 300px;
   height: 60px;
   border-radius: 10px;

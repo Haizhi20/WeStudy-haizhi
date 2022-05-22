@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-        <section  v-for="(item,index) in list" :key="index">
+        <section  v-for="(item,index) in section" :key="index">
                 <div class="tittle">
                     <span>{{index+1}}</span>
                     <p>{{section[index]}}</p>
@@ -8,7 +8,7 @@
                 <ul class="videos">
                     <!-- <li v-for="(item) in list[index]" :key="item.id"> -->
                     <li v-for="(item) in list" :key="item.id">
-                        <VideoCard :author="'moao'" :headline="item.tittle" :vid="item.id" :synopsis="'嗨嗨害'" :video_image="item.img" :num="index+1"/>
+                        <VideoCard :author="item.userName" :headline="item.title" :vid="item.id" :synopsis="''" :video_image="item.img" :num="index+1"/>
                     </li>
                     
                 </ul>
@@ -78,13 +78,16 @@ export default {
             ]
         }
     },
-    props:['section'],
+    props:['section','type'],
     methods:{
         //获取章节视频信息
         getSections:async function(){
             const result=await this.$http({
-                url:'/video/queryVideo',
+                url:'/video/queryVideoByType',
                 method:'get',
+                params:{
+                    type:this.type
+                }
             })
             console.log('video拿到的结果',result)
             this.list=result.data

@@ -2,7 +2,7 @@
 <div id="root">
     <video
         :src="video_url"
-        :controls="videoOptions.controls"
+        :controls="controls"
 
         webkit-playsinline="true"
         playsinline="true"
@@ -21,10 +21,7 @@ export default {
     name:'Player',
     data(){
         return {
-            videoOptions: {
-                controls:true,
-                src:this.video_url, // url地址
-                },
+            controls:true,
             player: null,
             playTime:'',
             seekTime:'',

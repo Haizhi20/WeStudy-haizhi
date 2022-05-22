@@ -5,7 +5,7 @@
           <span>{{num}}</span>
       </div>
       <div class="intro" @click="toVideoPlay()">
-          <div id="tittle">
+          <div id="title">
             <h4>{{headline}}</h4>
             <p>{{synopsis}}</p>
           </div>
@@ -79,17 +79,16 @@ export default {
     align-items: flex-start;
     height: 100px;
 }
-#tittle{
+#title{
     cursor: pointer;
 }
-#tittle h4{
+#title h4{
     text-align: left;
 }
-#tittle h4:hover{
+#title h4:hover{
     color: #42A5F5;
-
 }
-#tittle p{
+#title p{
     font-size: .85em;
     color: gray;
 }

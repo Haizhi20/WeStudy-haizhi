@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import cookie from 'js-cookie'
 Vue.use(VueRouter)
 const router = new VueRouter({
     mode: 'history',
@@ -28,17 +29,24 @@ const router = new VueRouter({
             naem: 'profile',
             path: '/profile',
             component: resolve => require(['@/components/Profile'], resolve),
+            children: [
+                { path: '/article', component: resolve => require(['@/components/video/VideoRecommend'], resolve) },
+            ]
         },
     ]
 })
 router.beforeEach((to, from, next) => {
     //路由跳转前回到页面头部
     window.scrollTo(0, 0)
-        //进入个人主页前判断token，没有则跳转登陆页面
-    const token = localStorage.getItem('token')
-    if (to.path == '/profile' && !token)
+        //进入个人主页前验证token，失败则跳转登陆页面
+    const token = cookie.get('token')
+
+    if (to.path == '/profile' && !token) {
+        console.log('udata被移除了')
+        window.localStorage.removeItem('udata')
         next({ path: '/login' })
-    else
+    } else
         next()
+
 })
 export default router
